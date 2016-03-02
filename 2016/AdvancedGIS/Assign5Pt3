@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <br />
+        <h1> <center><strong>Barcelona Air B & B Listings </strong></center>  </h1>
+        <br />
+        <p> 
+            <blockquote>This is a map of Air B&B Listings in Barcelona, Spain.</blockquote>   
+        <br />
+            <blockquote><em>Accurate as of January 2, 2016.</em></blockquote>
+        <br />
+           
+        </p>
+        <iframe width="100%" height="520" frameborder="0" src="https://loehk550.cartodb.com/viz/f7a8f58e-e027-11e5-a924-0e5db1731f59/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+   
+    <form action="neighborhoodselect.php">
+    <select name="neighborhood">
+        <option>El Raval</option>
+        <option>Ciutat Vella</option>
+        <option>El Gòtic</option>
+        <option>Sant Antoni</option>
+        <option>La Nova Esquerra de l'Eixample</option>
+        <option selected>El Raval</option>
+    </select>
+    <input type="submit">
+</form>
+    <p>entire home
+        <br />
+    private room
+        <br />
+        shared room</p>
+    
+    <p> <em>Links:</em> 
+        <br /> 
+            <a href="http://insideairbnb.com/get-the-data.html">Data Source</a>
+    <br />
+    <a href="hhttps://en.wikipedia.org/wiki/Barcelona">Barcelona Wikipedia</a>
+            <br /></p>    
+    </body>
+</html>
+
