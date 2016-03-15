@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!--
+    Load CartoDB's code so we can pull in our CartoDB maps.
+    -->
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+    
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+
+      #map {
+        height: 100%;
+        width: 100%;
+      }
+      
+      .host_neighbourhood-picker {
+        position: absolute;
+        bottom: 50px;
+        left: 50px;
+      }
+    </style>
+
+    <script>
+      var dataLayer;
+      $(document).ready(function () {
+        //
+        // Initialize map from CartoDB: create the map and store the data layer for later
+        //
+        cartodb.createVis('map', 'https://loehk550.cartodb.com/api/v2/viz/a449e658-ea51-11e5-847c-0ef24382571b/viz.json')
+          .done(function (vis, layers) {
+            // Store the data layer for later:
+            //  * layers[0] is the base layer (eg OpenStreetMap)
+            //  * layers[1] is where all of your data layers go, and they're stored as "sublayers". The first one is numbered 0, the second is 1, etc. In this case we're getting the first sublayer.
+            dataLayer = layers[1].getSubLayer(0);
+          });
+
+        //
+        // Initialize the borough picker: add an event handler to watch for changes
+        //
+        $('.host_neighbourhood-picker').change(function () {
+          var host_neighbourhood = $(this).val();
+          var sql;
+          if (host_neighbourhood === 'all') {
+            // if borough is 'all', reset SQL to the original
+            sql = "SELECT * FROM table_29_2";
+          }
+          else {
+            // else, select only features with the borough field set to the chosen borough
+            sql = "SELECT * FROM table_29_2 WHERE host_neighbourhood = '" + host_neighbourhood + "'";
+          }
+          dataLayer.setSQL(sql);
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <select class="host_neighbourhood-picker">
+      <option value="all">all neighbourhoods</option>
+      <option value="Kolonaki">Kolonaki</option>
+      <option value="Psyri">Psyri</option>
+      <option value="Plaka">Plaka</option>
+      <option value="Attiki">Attiki</option>
+      <option value="Mets">Mets</option>
+      <option value="Patisia">Patisia</option>
+    </select>
+  </body>
+</html>
