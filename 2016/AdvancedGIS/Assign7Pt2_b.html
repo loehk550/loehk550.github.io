@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!--
+    Load CartoDB's code so we can pull in our CartoDB maps.
+    -->
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+    
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+
+      #map {
+        height: 100%;
+        width: 100%;
+      }
+      
+      .borough-picker {
+        position: absolute;
+        bottom: 40px;
+        left: 26px;
+      }
+    </style>
+
+    <script>
+      var dataLayer;
+      $(document).ready(function () {
+      
+        cartodb.createVis('map', 'https://loehk550.cartodb.com/api/v2/viz/a449e658-ea51-11e5-847c-0ef24382571b/viz.json')
+          .done(function (vis, layers) {
+            dataLayer = layers[1].getSubLayer(0);
+          });
+
+        //
+        // Initialize the borough picker: add an event handler to watch for changes
+        //
+        $('.borough-picker').change(function () {
+          var borough = $(this).val();
+          var sql;
+          if (borough === 'all') {
+            // if borough is 'all', reset SQL to the original
+            sql = "SELECT * FROM listings_2";
+          }
+          else {
+            sql = "SELECT * FROM listings_2 = '" + borough + "'";
+          }
+          dataLayer.setSQL(sql);
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <select class="borough-picker">
+    <option value="all">All Neighbourhoods</option>
+      <option value="El Raval">El Raval</option>
+      <option value="Ciutat Vella">Ciutat Vella</option>
+      <option value="Sant Antoni">Sant Antoni</option>
+      <option value="La Nova Esquerra de l'Eixample">La Nova Esquerra de l'Eixample</option>
+      <option value="La Sagrada Família">La Sagrada Família"</option>
+    </select>
+  </body>
+</html>
