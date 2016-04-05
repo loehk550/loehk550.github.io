@@ -1,0 +1,27 @@
+1 <!DOCTYPE html> 
+2 <html> 
+3 <head> 
+4   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" /> 
+5   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script> 
+6   <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script> 
+7   $(document).ready(function () { 
+8   var map = L.map('map').setView([42.3601,-71.0589], 14); 
+9   L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', { 
+10     attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.', 
+11     maxZoom: 18 
+12 }).addTo(map); 
+13   $.getJSON('https://lohek550.cartodb.com/api/v2/sql?q= SELECT * FROM cb_2014_us_state_500k WHERE aterm=0') 
+14     .done(function (data) { 
+15       L.geoJson(data).addTo(map);    
+16     }); 
+17 }); 
+18   </script>   
+19   <meta charset="utf-8"> 
+20   <title>TPR</title> 
+21 
+ 
+22   </head> 
+23 <body> 
+24   <div id="map"></div> 
+25 </body> 
+26 </html> 
