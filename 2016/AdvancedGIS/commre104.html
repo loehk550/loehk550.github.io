@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+     body {margin: 30px; padding: 20px; background: #FCF9EF}
+            p {
+                font-size: 19px; font-family: 'Roboto', sans-serif; color: #595959; margin: 10px; padding: 80
+            }
+            a {font-size: 22px; color: #e36a00; margin: 20px; font-family: 'Roboto', sans-serif; text-align: center}
+            ul {list-style-type: circle; color: #5a788a; font-family: 'Roboto', sans-serif;}
+        button {background-color: #5a788a; color: #FCF9EF; font-family: 'Roboto', sans-serif; font-size: 24px;border: 4px solid #595959; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); display: inline-block;
+    }
+            
+      </style>
+    
+      
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!--
+    Load CartoDB's code so we can pull in our CartoDB maps.
+    Blue Color:  color: ;
+    Greyston logo address: http://greyston.com/
+http://s3-media2.fl.yelpcdn.com/bphoto/NNoDgzm1_OMUuP9oKYz1aw/o.jpg
+    -->
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+        <h1 style = "font-family: 'Roboto', sans-serif; color: #e36a00; font-size: 50px; text-align: center;"><center><strong><img width="14%" height="14%" frameborder="8"
+             src = "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS3Xtt9P3oB51oHPIBtoIdTLMWZM5iPJwKum-jNdlpbySQ7Rd0Nrw">Yonkers Community Resources</strong></center></h1>
+      <button type="button5" onclick="window.location.href= 'https://loehk550.github.io/2016/AdvancedGIS/home104.html'">Home</button>
+      <button type="button5" onclick="window.location.href= 'https://loehk550.github.io/2016/AdvancedGIS/commre104.html'">Community Resources</button>
+      <button type="button5" onclick="window.location.href= 'https://loehk550.github.io/2016/AdvancedGIS/ophire104.html'">Open Hiring Resources</button>
+      <button type="button5" onclick="window.location.href= 'https://loehk550.github.io/2016/AdvancedGIS/yonkers104.html'">Yonkers</button>
+      <button type="button5" onclick="window.location.href= 'http://greyston.com/'">Greyston Bakery</button>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <p> 
+            Greyston's <b>PathMaking Services</b> help unemployed individuals find services and help that put them on their Path to self-sufficiency, community contribution, and health. The resources in the map below serve as tools to help these individuals follow their own Path and can be further utilized by other businesses that utilize Greyston's <b>Open Hiring</b> model.  Service categories can be chosen from the drop-down menu below the map. 
+        <br />
+        <br />  
+        </p>
+      </head>  
+    <style>
+      html, body {
+        height: 100%;
+        margin: 14px;
+        padding: 1rtg0px;
+        text-align: center;
+      }
+
+      #map {
+        height: 100%;
+        width: 50%;
+        margin-left: 340px;
+      }
+      
+      .type_2 {
+        position: relative;
+        bottom: auto;
+        left: 2 px;
+        font-family: 'Roboto', sans-serif;
+}
+    </style>
+
+    <script>
+      var dataLayer;
+      $(document).ready(function () {
+        //
+        // Initialize map from CartoDB: create the map and store the data layer for later
+        //
+        cartodb.createVis('map', 'https://greymaps104.cartodb.com/api/v2/viz/2cecd3fa-0e40-11e6-bed1-0e98b61680bf/viz.json')
+         .done(function (vis, layers) {
+            // Store the data layer for later:
+            //  * layers[0] is the base layer (eg OpenStreetMap)
+            //  * layers[1] is where all of your data layers go, and they're stored as "sublayers". The first one is numbered 0, the second is 1, etc. In this case we're getting the first sublayer.
+            dataLayer = layers[1].getSubLayer(0);
+          });
+
+        //
+        // Initialize the borough picker: add an event handler to watch for changes
+        //
+        $('.type_2').change(function () {
+          var type_2 = $(this).val();
+          var sql;
+          if (type_2 === 'all') {
+            // if borough is 'all', reset SQL to the original
+            sql = "SELECT * FROM resources_yonkers";
+          }
+          else {
+            // else, select only features with the borough field set to the chosen borough
+            sql = "SELECT * FROM resources_yonkers WHERE type_2 = '" + type_2 + "'";
+          }
+          dataLayer.setSQL(sql);
+        });
+      });
+    </script>
+  <body>
+    <div id="map"></div>
+    <select class="type_2">
+      <option value="all">All - Choose Category</option>
+      <option value="C">Children and Families</option>
+      <option value="B">Basic Needs</option>
+      <option value="H">Housing</option>
+      <option value="M">Sub. Abuse and Mental Health</option>
+      <option value="I">Immigration</option>
+      <option value="G">Gov't Office</option>
+    </select>
+  </body>
+    <p>
+    <br />
+            <em>The link below leads to the CartoDB account where this map's data can be accesed and updated.</em>  
+        <br />
+        <br />
+        <em>Contact the site's creator, Kobi Loehr, at loehk550@newschool.edu for help. </em>
+        <br />
+        </p>
+   <br />
+    <p> <em><b>Links for Greyston</b></em> 
+        <br /> 
+            <em><a href="https://greymaps104.cartodb.com/me">CartoDB - Yonkers Resources</a></em>
+        <br />
+        <br/>
+        <button type="button5" onclick="window.location.href= 'https://loehk550.github.io/2016/AdvancedGIS/instructions104.html'">Instructions to Update Map Data</button>
+            <br />
+    </p>  
+</html>
